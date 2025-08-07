@@ -1,0 +1,146 @@
+/* Trying pair, vector, list, deque, stack, queue, priority queue, heap, set, multiset,unordered set, map, multimap, unordered map */
+#include <bits/stdc++.h>
+using namespace std;
+
+//function to print elements in C++ STL Container
+template<typename T>
+void print(const T& container) {
+    for (const auto& elem : container) {
+        cout << elem << ' ';
+    }
+    cout<<endl;
+}
+
+void test_pair(){
+   //pair stored in vector -> add ele, remove ele, access ele
+   
+   //creating vector containing pairs
+   vector <pair<int,int>> v;
+   
+   //add elements
+   v.push_back({2,4});
+   v.emplace_back(5,9);
+   
+   //access element
+   cout<<"first ele of 0th index is "<<v[0].first<<" and second ele of 1st index is "<<v[1].second<<endl<<endl;
+   
+   //print elements
+   cout<<"Elements in v are: "<<endl;
+   for (auto it:v){
+       cout<<it.first<<','<<it.second<<endl;
+   }
+   cout<<endl;
+   
+   //remove element eg. remove first element
+   v.erase(v.begin());
+   cout<<"Elements after first element removed from v are: "<<endl;
+   for (auto it:v){
+       cout<<it.first<<','<<it.second<<endl;
+   }
+   cout<<endl;
+}
+
+void test_vector(){
+    //syntax
+    vector <int> v1; 
+    vector <int> v2(5); //vector of space 5
+    vector <int> v3(5,30); // 30 repeated 5 times. ie. created space 5 and added 30 in it
+    
+    //add element (at the back)
+    v3.push_back(10);
+    v3.emplace_back(10);
+    print(v3);
+    
+    //add element (at any index)
+    v3.insert(v3.begin()+5,20); // 20 added at index 5
+    v3.insert(v3.begin()+2,2,15); // 15 added 2 times at index 2
+    print(v3);
+    
+    //erase element (at the back)
+    v3.pop_back();
+    print(v3);
+    
+    //1. erase element (at any index) eg. index 4
+    //2. erase element (at range of index) eg. index 2 to 4 ie. element at index 2 and 3 removed.
+    v3.erase(v3.begin()+4);
+    print(v3);
+    v3.erase(v3.begin()+2,v3.begin()+4);
+    print(v3);
+    
+    //access element (its similar to list)
+    cout<<v3[2]<<' '<<v3.at(2)<<endl;
+    
+    //copy into new vector (from v3 elements to v4)
+    vector <int> v (v3);
+    print(v);
+    
+    //copy into old vector
+    v1.erase(v1.begin(),v1.end());//in case vector has values or use v1.clear();
+    v1.insert(v1.begin(),v3.begin(),v3.end());
+    print(v1);
+    
+    //iterator (in 2 ways)
+    vector<int>::iterator it = v3.begin(); auto it2 = v3.begin();
+    cout<<&(*it)<<' '<<&(*it2)<<endl; //you cannot print address just by typing 'it' or 'it2' as its an iterator and not pointer. So you find 'it' and 'it2' value and then their address
+    
+    //access last and first element
+    cout<<v.front()<<" "<<v.back()<<endl;
+    
+    //like begin and end, we have rbegin and rend
+    
+    //size of vector
+    cout<<v.size()<<endl;
+    
+    //swap vector data
+    print(v1); print(v2);
+    v1.swap(v2);
+    print(v1); print(v2);
+    
+    //empty function checks if container empty or not
+    //True if empty, else False
+    cout<<v1.empty()<<' ';
+    vector <int> v5;
+    cout<<v5.empty()<<endl;
+    
+    //count how many times particular element appears eg. element 30
+    cout<<count(v.begin(),v.end(),30);
+}
+
+void test_list(){
+    //syntax
+    list <int> l;
+    
+    //adding element in front and back
+    l.push_back(3);
+    l.emplace_back(3);
+    l.push_front(2);
+    l.emplace_front(1);
+    print(l);
+    
+    //adding elements in any index
+    l.insert(next(l.begin(),2),4);
+    print(l);
+    l.insert(next(l.begin(),3),3,5);
+    print(l);
+    //next() is used here due to no random access in list, list is actually DLL (doubly linked list here), leading to bidirectional. In vector, deque, arrays and strings, we have random access and so we can use '+' and '[]' but not in other STL containers.
+    
+    //remove element from front and back and any index
+    l.pop_back();
+    l.pop_front();
+    l.erase(next(l.begin(),4));
+    l.erase(l.begin(),next(l.begin(),2));
+    print(l);
+    
+    //access front and back element and any index element
+    cout<<l.front()<<' '<<*next(l.begin(),1)<<' '<<l.back()<<endl;
+    
+    //rest functions same as vector
+}
+
+
+int main(){
+    //test_pair();
+    //test_vector();
+    //test_list();
+    return 0;
+}
