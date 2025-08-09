@@ -314,19 +314,82 @@ void test_unordered_map(){
     //general case time complexity = O(1) but worst case time complexity = O(n)
 }
 
+bool comp(pair <int,int> p1, pair <int,int> p2){
+    if (p1.second<p2.second) return false;
+    else if (p1.second == p2.second){
+        if (p1.first>p2.first) return false;
+        else return true;
+    }
+    else return true;
+}
+
 int main(){
-    //test_pair();
-    //test_vector();
-    //test_list();
-    //test_deque();
-    //test_stack();
-    //test_queue();
-    //test_priority_queue();
-    //test_set();
-    //test_multiset();
-    //test_unordered_set();
-    //test_map();
-    //test_multimap();
-    //test_unordered_map();
+//THESE ARE ALL THE C++ STL CONTAINERS:
+    test_pair();
+    test_vector();
+    test_list();
+    test_deque();
+    test_stack();
+    test_queue();
+    test_priority_queue();
+    test_set();
+    test_multiset();
+    test_unordered_set();
+    test_map();
+    test_multimap();
+    test_unordered_map();
+    
+//THESE ARE ALL THE IMPORTANT C++ STL ALGORITHMS:
+    //Sort in ascending order
+    pair <int,int> arr[]={{5,6},{3,8},{2,1},{9,7},{4,6},{7,8}};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    sort(arr, arr+n);
+    for (auto it: arr){
+        cout<<"{"<<it.first<<","<<it.second<<"}"<<endl;
+    }
+    cout<<endl<<endl;
+    //Sort in descending order
+    sort(arr, arr+n, greater<pair<int,int>>());
+    for (auto it: arr){
+        cout<<"{"<<it.first<<","<<it.second<<"}"<<endl;
+    }
+    cout<<endl<<endl;
+    //Sort in some particular order. Eg. sort 2nd numbers in descending order. In case 2nd numbers in pair are same, then sort 1st numbers in ascending order.
+    //For this, we create a bool comp (created above) which swaps if condition false, else does nothing
+    sort(arr,arr+n,comp);
+    for (auto it: arr){
+        cout<<"{"<<it.first<<","<<it.second<<"}"<<endl;
+    }
+    cout<<endl<<endl;
+    
+    //__builtin_popcount() and __builtin_popcountll() count number of 1 in binary form of number
+    int num = 6;
+    cout<<__builtin_popcount(num)<<endl; //2 because 6 = 110
+    long long num2 = 165786578687;
+    cout<<__builtin_popcountll(num2)<<endl;
     return 0;
+    
+    //max and min element address
+    int arr2[] = {3,5,4,8,5,7,3,2,8,0,7,9,1};
+    int n2 = sizeof(arr2)/sizeof(arr2[0]);
+    auto max_ele_address = max_element(arr2,arr2+n2);
+    auto min_ele_address = min_element(arr2,arr2+n2);
+    cout<<max_ele_address<<"  "<<min_ele_address<<endl;
+    int max_ele = *max_ele_address; 
+    int min_ele = *min_ele_address;
+    cout<<max_ele<<"  "<<min_ele<<endl;
+    
+    //permutation and combination (note: always sort first before using next_permutation or else, you will not get all the permutation)
+    string s = "253";
+    sort(s.begin(),s.end());
+    do{
+        cout<<s<<endl;
+    }while(next_permutation(s.begin(),s.end()));
+    cout<<endl;
+    string s2 = "code";
+    sort(s2.begin(),s2.end());
+    do{
+        cout<<s2<<endl;
+    }while(next_permutation(s2.begin(),s2.end()));
+    cout<<endl;
 }
