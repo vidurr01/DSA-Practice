@@ -137,10 +137,196 @@ void test_list(){
     //rest functions same as vector
 }
 
+void test_deque(){
+    deque <int> dq;
+    //everything same as list...
+    //but what sets deque apart from list is random access, ie. it can access any index in time complexity lesser than O(n). So it's faster in searching element compared to list, which uses DLL.
+}
+
+void test_stack(){
+    //follows LIFO + index accessing not present (so only push and pop) + book stack type structure (so, top). Also push at back, pop back element
+    //syntax
+    stack <int> s;
+    
+    //push, pop, top
+    s.push(6);
+    s.push(4);
+    s.push(8);
+    cout<<s.top()<<endl;
+    s.pop();
+    cout<<s.top()<<endl;
+    //print(s) won't work here cause no index accessing
+    
+    //swap into new stack, check stack empty, stack size
+    stack <int>s2(s); 
+    cout<<s.empty()<<endl; 
+    cout<<s2.size()<<endl;
+    
+    //to empty stack
+    while (!s.empty()){
+        s.pop();
+    }
+    if (s.empty()){
+        cout<<"Stack is empty";
+    }
+}
+
+void test_queue(){
+    //follows FIFO principle + no index accessing (so push and pop) + people in queue type structure (so, front and back); also push at back, pop front element.
+    //syntax
+    queue <int> q;
+    
+    //push, pop, front, back
+    q.push(3);
+    q.push(5);
+    q.push(8);
+    cout<<q.front()<<endl; //3
+    cout<<q.back()<<endl; //8
+    q.pop(); //pops 3
+    cout<<q.front()<<endl; //5
+    
+    //rest same as stack
+}
+
+void test_priority_queue(){
+    //queue but ordered too + acts like stack (functions wise) + FIFO principle + no index accessing + binary heap used to make this.
+    //syntax
+    priority_queue <int> pq;
+    
+    //push, pop, top (gives max element by default) [no front and back]; pop removes the highest priority element ie. the max element in this case
+    pq.push(3);
+    pq.push(8);
+    pq.push(6);
+    cout<<pq.top()<<endl; // 8 
+    pq.pop(); // removed 8
+    cout<<pq.top()<<endl; // 6
+    pq.push(9);
+    cout<<pq.top()<<endl; // 9
+    
+    // NOTE: By default we have max heap, so thats why top element is the max element and pop removes max element. Min heap has top element as min element and pop removes min element in that.
+    // to implement min heap
+    priority_queue <int,vector<int>,greater<int>> pq2;
+    
+    // in case you want to convert already created max heap to min heap (yeah you will still need another binary heap but atleast this method will help retain those elements stored in max heap to min heap)
+    while(!pq.empty()){
+        pq2.push(pq.top());
+        pq.pop();
+    }
+    if (pq.empty()){
+        cout<<"Max heap converted to min heap";
+    }
+    
+    //rest same as stack
+}
+
+//Note: for sorted C++ STL containers, push_front, push_back and push make no sense, so that is the reason why insert and emplace is used and not push. (exception = unordered set and unordered map). Because of this reason, we have 'erase' instead of 'pop'.
+    
+void test_set(){
+    //unique + sorted (just like the one in python).
+    //syntax
+    set <int> s;
+    
+    //insert or emplace (no push), erase (no pop)
+    s.insert(3);
+    s.emplace(5);
+    s.insert(9);
+    s.emplace(7);
+    s.emplace(5);
+    cout<<s.size()<<endl; // 4 and not 5. 
+    print(s);
+    s.erase(9);
+    print(s);
+    
+    //we dont have front and back but we have find instead. We also have begin,end,rbegin,rend. So you can do this to print front and back element. s.begin and s.rbegin are iterator so we use * to get value.
+    cout<<*s.begin()<<"  "<<*s.rbegin()<<endl;
+    
+    //find takes element as input and gives the iterator pointing to element as output. As we can't print iterator, we use * to get element value ie. 7 and then '&' to get pointer
+    cout<<&*s.find(7)<<endl;
+    //if element not found, then find gives s.end() iterator.
+    
+    //check if element present in set? use count, it counts how many times element present in set (ofcourse either once or zero). If one, element in set. Else zero.
+    if (s.count(5)){
+        cout<<"5 is in set"<<endl;
+    }
+    if (s.count(8)){
+        cout<<"8 is in set"<<endl; //not printed as 8 is not in set
+    }
+    
+    //upper bound gives iterator of first element >val and lower bound gives iterator of first element >= val. If no element in container, the iterator points to swhere end() iterator is pointing.
+    cout<<&*s.upper_bound(5)<<"  "<<&*s.lower_bound(5)<<endl;
+    
+    cout<<&*s.upper_bound(5)<<"  "<<&*next(s.lower_bound(5),1)<<endl; //both must be same according to their functionality as we read earlier
+    //adding range in upper and lower bound (remove 's.' in this case)
+    cout<<&*upper_bound(s.begin(),next(s.begin(),1),7)<<"  "<<&*lower_bound(s.begin(),next(s.begin(),1),7)<<endl;
+} 
+//NOTE:upper and lower bound only works for sorted C++ STL containers only. Watch Luv Babbar's video for in depth understanding. 
+void test_multiset(){
+    //duplicate + sorted
+    //all functions same as set 
+}
+
+void test_unordered_set(){
+    //unique + unsorted
+    //all functions same as set except upper and lower bound (cause not sorted STL container)
+    //general case time complexity = O(1) but worst case time complexity = O(n).
+}
+
+void test_map(){
+    //same as dictionary of python. Unique keys but duplicate values, sorted by keys
+    //syntax
+    map <string,int> m;
+    
+    //insert and emplace (no push), erase (no pop)
+    m.insert({"Apple",5});
+    m.emplace("Mango",6);
+    m.emplace("Banana",4);
+    m.emplace("Peach",6);
+    m.erase("Banana");
+    
+    //access elements (same as dictionary)
+    cout<<m["Apple"]<<endl; // 5
+    
+    //printing key and value pair (we take key and value just like pair)
+    for (auto it: m){
+        cout<<it.first<<" : "<<it.second<<endl;
+    }
+    
+    //find if key present in map
+    auto end_iterator = m.end();
+    auto it1 = m.find("Banana");
+    auto it2 = m.find("Apple");
+    if (it1 == end_iterator) cout<<"Banana in map"<<endl;
+    else cout<<"Banana not in map"<<endl;
+    if (it2 == end_iterator) cout<<"Apple in map"<<endl;
+    else cout<<"Apple not in map"<<endl;
+    
+    //upper and lower bound (same as in set)
+}
+
+void test_multimap(){
+    //duplicate keys and duplicate values, but sorted
+    //all functions same as map
+}
+
+void test_unordered_map(){
+    //unique keys and duplicate values, but unsorted
+    //upper and lower bound will not work cause not a sorted STL container.
+    //general case time complexity = O(1) but worst case time complexity = O(n)
+}
 
 int main(){
     //test_pair();
     //test_vector();
     //test_list();
+    //test_deque();
+    //test_stack();
+    //test_queue();
+    //test_priority_queue();
+    //test_set();
+    //test_multiset();
+    //test_unordered_set();
+    //test_map();
+    //test_multimap();
+    //test_unordered_map();
     return 0;
 }
