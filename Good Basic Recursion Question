@@ -1,0 +1,74 @@
+// Online C++ compiler to run C++ program online
+#include <bits/stdc++.h>
+using namespace std;
+
+auto one_to_n_recursion(int i, int n){
+    if (i>n) return;
+    cout<<i<<endl;
+    one_to_n_recursion(i+1,n);
+}
+auto n_to_one_recursion(int i, int n){
+    if (i>n) return;
+    cout<<n<<endl;
+    n_to_one_recursion(i,n-1);
+}
+auto one_to_n_backtracking(int i, int n){
+    if (i<=0) return;
+    one_to_n_backtracking(i-1,n);
+    cout<<i<<endl;
+}
+auto n_to_one_backtracking(int i, int n){
+    if (i>n) return;
+    n_to_one_backtracking(i+1,n);
+    cout<<i<<endl;
+}
+
+auto fibonacci_numbers(int n){
+    if (n<=1) return n;
+    return fibonacci_numbers(n-1)+fibonacci_numbers(n-2);
+}
+auto factorial_functional(int n){
+    if (n==1) return 1;
+    return n*factorial_functional(n-1);
+}
+
+auto factorial_parameterised(int n,int product){
+    if (n==1) return product;
+    return factorial_parameterised(n-1, product*n);
+    
+}
+auto palindrome(string s, int n, int i, bool flag){
+    if (n<=i/2) {
+        flag = true;
+        return flag;
+    }
+    if (s[i] != s[n-i-1]) {
+        flag = false;
+        return flag;
+    };
+    palindrome(s,n,i+1,true);
+}
+
+int main() {
+    cout<<"enter the number: "; int n; cin>>n;
+    one_to_n_recursion(1,n);
+    cout<<endl;
+    n_to_one_recursion(1,n);
+    cout<<endl;
+    one_to_n_backtracking(n,n);
+    cout<<endl;
+    n_to_one_backtracking(1,n);
+    cout<<endl;
+    cout<<fibonacci_numbers(n);
+    cout<<endl;
+    cout<<factorial_functional(n);
+    cout<<endl;
+    cout<<factorial_parameterised(n,1);
+    cout<<endl;
+    cout<<"Enter word you want to check: "; string s; cin>>s;
+    bool output = palindrome(s, sizeof(s)/sizeof(s[0]),0, true);
+    if (output == 0) cout<<"Not Palindrome";
+    if (output == 1) cout<<"Palindrome";
+    cout<<endl;
+    return 0;
+}
