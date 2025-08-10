@@ -37,16 +37,10 @@ auto factorial_parameterised(int n,int product){
     return factorial_parameterised(n-1, product*n);
     
 }
-auto palindrome(string s, int n, int i, bool flag){
-    if (n<=i/2) {
-        flag = true;
-        return flag;
-    }
-    if (s[i] != s[n-i-1]) {
-        flag = false;
-        return flag;
-    };
-    palindrome(s,n,i+1,true);
+bool palindrome(string s, int n, int i){
+    if (i>n/2) return true;
+    if (s[i] != s[n-i-1]) return false;
+    return palindrome(s,n,i+1);
 }
 
 int main() {
@@ -66,9 +60,9 @@ int main() {
     cout<<factorial_parameterised(n,1);
     cout<<endl;
     cout<<"Enter word you want to check: "; string s; cin>>s;
-    bool output = palindrome(s, sizeof(s)/sizeof(s[0]),0, true);
-    if (output == 0) cout<<"Not Palindrome";
-    if (output == 1) cout<<"Palindrome";
+    bool output = palindrome(s, s.length(),0);
+    if (!output) cout<<"Not Palindrome";
+    if (output) cout<<"Palindrome";
     cout<<endl;
     return 0;
 }
