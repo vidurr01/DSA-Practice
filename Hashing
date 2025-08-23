@@ -1,0 +1,92 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void hash_int_list(int n, int hash[], int arr[]) {
+    for(int i=0; i<n; i++) {
+        hash[arr[i]]++;
+    }
+}
+
+void hash_int_umap(int n, unordered_map <int,int>& umap, int arr[]){
+    for (int i=0; i<n; i++){
+        umap[arr[i]]++;
+    }
+}
+
+void hash_chr_list(int n2, int hash2[], char arr2[]){
+    for(int i=0; i<n2; i++){
+        hash2[arr2[i]]++;
+    }
+}
+
+int main() {
+    cout<<"Case1: hash in list form."<<endl<<endl;
+    cout<<"Enter number of elements in list: ";
+    int n;
+    cin>>n;
+    int arr[n];
+    for (int i=0; i<n; i++) {
+        cout<<"Enter element "<<i + 1<<": ";
+        cin>>arr[i];
+    }
+    cout<<endl;
+    int max=-1;
+    for (int i=0; i<n; i++) {
+        if (arr[i]>max) {
+            max=arr[i];
+        }
+    }
+    int hash[max+1]={0};
+    hash_int_list(n, hash, arr);
+    cout<<"How many elements you wanna search: ";
+    int q;
+    cin>>q;
+    while (q--) {
+        int number;
+        cin>>number;
+        if (number>=0 && number<=max) cout<<hash[number]<<endl;
+        else cout<<"Number out of range."<<endl;
+    }
+    cout<<endl;
+    cout<<"Case 2: hash in umap form."<<endl<<endl;
+    unordered_map <int,int> umap;
+    hash_int_umap(n, umap, arr);
+    cout<<"How many elements you wanna search: ";
+    int q2; cin>>q2;
+    while (q2--) {
+        int number;
+        cin>>number;
+        cout<<umap[number]<<endl;
+    }
+    cout<<endl;
+    cout<<"Case3: hash of characters in list form."<<endl<<endl;
+    cout<<"Enter number of elements in list: ";
+    int n2;
+    cin>>n2;
+    char arr2[n2];
+    for (int i=0; i<n2; i++) {
+        cout<<"Enter element "<<i + 1<<": ";
+        cin>>arr2[i];
+    }
+    cout<<endl;
+    int hash2[256]={0};
+    hash_chr_list(n2, hash2, arr2);
+    cout<<"How many elements you wanna search: ";
+    int q3;
+    cin>>q3;
+    while (q3--) {
+        char chr; cin>>chr;
+        cout<<hash2[chr]<<endl;
+    }
+    cout<<endl;
+}
+
+/* Important points:
+max. 10^6 size for int arr[] in local
+max. 10^7 size for int arr[] in global
+max. 10^7 size for bool arr[] in local
+max. 10^8 size for bool arr[] in global
+
+we used unordered map instead of map because of storing & searching in umap is 0(1)[worst case O(n)] while storing & searching in map is O(logn)
+
+when is umap searching O(n) and why? Due to internal collisions.We did division method. Briefly explain yourself why...*/
